@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 export function Profile() {
   return (
-    <View styles={styles.container}>
+    <View style={styles.container}>
       <Text>Página Profile </Text>
     </View>
   );
