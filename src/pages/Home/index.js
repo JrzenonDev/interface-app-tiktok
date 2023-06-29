@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import {
+  Dimensions,
   FlatList,
   Platform,
   StatusBar,
@@ -9,6 +10,8 @@ import {
   View,
 } from "react-native";
 import { FeedItem } from "../../components/FeedItem";
+
+const { height: heightScreen } = Dimensions.get("screen");
 
 export function Home() {
   let feedItems = [
@@ -57,7 +60,14 @@ export function Home() {
           <FeedItem data={item} currentVisibleItem={showItem} />
         )}
         onViewableItemsChanged={onViewableItemChanged}
-        viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
+        snapToAlignment="center"
+        snapToInterval={heightScreen}
+        scrollEventThrottle={150}
+        decelerationRate={"fast"}
+        viewabilityConfig={{
+          waitForInteraction: false,
+          viewAreaCoveragePercentThreshold: 100,
+        }}
       />
     </View>
   );
