@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   FlatList,
   Platform,
@@ -31,6 +32,7 @@ export function Home() {
       description: "Aprendendo a trabalhar com Drag and Drop no React Native",
     },
   ];
+  const [showItem, setShowItem] = useState(feedItems[0]);
 
   return (
     <View style={styles.container}>
@@ -45,7 +47,9 @@ export function Home() {
       </View>
       <FlatList
         data={feedItems}
-        renderItem={({ item }) => <FeedItem data={item} />}
+        renderItem={({ item }) => (
+          <FeedItem data={item} currentVisibleItem={showItem} />
+        )}
       />
     </View>
   );

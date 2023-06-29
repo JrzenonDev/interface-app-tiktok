@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Video } from "expo-av";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   Platform,
@@ -13,9 +13,17 @@ import {
 
 const { height: heightScreen } = Dimensions.get("screen");
 
-export function FeedItem({ data }) {
+export function FeedItem({ data, currentVisibleItem }) {
   const video = useRef(null);
   const [status, setStatus] = useState({});
+  useEffect(() => {
+    if (currentVisibleItem?.id === data?.id) {
+      // verifica se o item que está sendo visualizado na tela é igual ao data.id
+      video.current?.playAsync();
+    } else {
+      video.current?.pauseAsync();
+    }
+  }, [currentVisibleItem]);
   function handlePlayer() {
     status.isPlaying ? video.current?.pauseAsync() : video.current?.playAsync();
   }
