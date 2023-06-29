@@ -68,6 +68,7 @@ export function Home() {
           waitForInteraction: false,
           viewAreaCoveragePercentThreshold: 100,
         }}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
