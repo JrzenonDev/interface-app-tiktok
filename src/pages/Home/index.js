@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -33,6 +33,12 @@ export function Home() {
     },
   ];
   const [showItem, setShowItem] = useState(feedItems[0]);
+  const onViewRef = useRef(({ viewableItems, changed }) => {
+    if (changed && changed.length > 0) {
+      setShowItem(feedItems[changed[0].index]);
+    }
+  });
+  const onViewableItemChanged = useCallback(onViewRef.current, []);
 
   return (
     <View style={styles.container}>
@@ -50,6 +56,8 @@ export function Home() {
         renderItem={({ item }) => (
           <FeedItem data={item} currentVisibleItem={showItem} />
         )}
+        onViewableItemsChanged={onViewableItemChanged}
+        viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
       />
     </View>
   );
