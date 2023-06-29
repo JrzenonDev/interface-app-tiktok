@@ -1,10 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Video } from "expo-av";
+import { useRef } from "react";
+import { Dimensions, Pressable, StyleSheet } from "react-native";
+
+const { height: heightScreen } = Dimensions.get("screen");
 
 export function FeedItem({ data }) {
+  const video = useRef(null);
   return (
-    <View>
-      <Text style={{ color: "#fff" }}>{data.name}</Text>
-    </View>
+    <Pressable>
+      <Video
+        ref={video}
+        style={{ width: "100%", height: heightScreen }}
+        source={{ uri: data?.video }}
+        resizeMode="cover"
+      />
+    </Pressable>
   );
 }
 
