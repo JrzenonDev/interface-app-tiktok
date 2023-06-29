@@ -1,6 +1,15 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Video } from "expo-av";
 import { useRef, useState } from "react";
-import { Dimensions, Pressable, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const { height: heightScreen } = Dimensions.get("screen");
 
@@ -13,6 +22,32 @@ export function FeedItem({ data }) {
 
   return (
     <Pressable onPress={handlePlayer}>
+      <View
+        style={[
+          styles.info,
+          {
+            bottom: 110,
+          },
+        ]}
+      >
+        <Text style={styles.name}>{data?.name}</Text>
+        <Text numberOfLines={2} style={styles.description}>
+          {data?.description}
+        </Text>
+      </View>
+      <View style={styles.action}>
+        <TouchableOpacity style={styles.actionButton}>
+          <Ionicons name="heart" size={35} color="#fff" />
+          <Text style={styles.actionText}>30.0K</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton}>
+          <Ionicons name="chatbubble-ellipses" size={35} color="#fff" />
+          <Text style={styles.actionText}>30</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton}>
+          <Ionicons name="bookmark" size={35} color="#fff" />
+        </TouchableOpacity>
+      </View>
       <Video
         ref={video}
         style={{ width: "100%", height: heightScreen }}
@@ -27,4 +62,38 @@ export function FeedItem({ data }) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  info: {
+    position: "absolute",
+    zIndex: 99,
+  },
+  name: {
+    color: "#fff",
+    fontWeight: "bold",
+    marginBottom: 4,
+    textShadowColor: "rgba(0, 0, 0, 0.90)",
+    textShadowOffset: { width: -1, height: 1.5 },
+    textShadowRadius: 8,
+  },
+  description: {
+    color: "#fff",
+    marginRight: 24,
+    textShadowColor: "rgba(0, 0, 0, 0.90)",
+    textShadowOffset: { width: -1, height: 1.5 },
+    textShadowRadius: 8,
+  },
+  action: {
+    position: "absolute",
+    zIndex: 99,
+    right: 10,
+    bottom: Platform.OS === "android" ? 120 : 170,
+    gap: 8,
+  },
+  actionText: {
+    textAlign: "center",
+    color: "#fff",
+    textShadowColor: "rgba(0, 0, 0, 0.90)",
+    textShadowOffset: { width: -1, height: 1.5 },
+    textShadowRadius: 8,
+  },
+});
